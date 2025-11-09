@@ -1,0 +1,349 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Nguyen Nhat Truong's CV},
+    pdfauthor={Nguyen Nhat Truong},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+% Define custom environments
+\newenvironment{educationentry}{
+    \begin{onecolentry}
+}{
+    \end{onecolentry}
+} % new environment for education entries
+
+\newenvironment{experienceentry}{
+    \begin{onecolentry}
+}{
+    \end{onecolentry}
+} % new environment for experience entries
+
+\newenvironment{projectentry}{
+    \begin{onecolentry}
+}{
+    \end{onecolentry}
+} % new environment for project entries
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{25 pt}{25 pt}\selectfont Nguyen Nhat Truong
+
+        \vspace{5 pt}
+
+        \normalsize
+        \mbox{Di An City, Binh Duong Province, Vietnam}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:truongnn20022003@gmail.com}{truongnn20022003@gmail.com}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+84-325762105/}{+84 325762105}}%  # fix
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/nhattruongnguyen20022003/}{linkedin.com/in/nhattruongnguyen20022003/}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/ChaosAIVision/}{github.com/ChaosAIVision/}}%
+    \end{header}    
+
+    \vspace{5 pt - 0.3 cm}
+
+
+    \section{Summary}
+
+        \begin{onecolentry}
+            AI Engineer with a strong focus on Generative AI, including LLM training/inference, diffusion pipelines, and agent systems. Proven ability to develop and implement AI applications in image recognition and generative models. Experienced in optimizing training pipelines, model evaluation, and deployment using technologies like VLLM and Triton Inference Server. Seeking to leverage expertise in AI/ML to drive innovative solutions.
+        \end{onecolentry}
+
+    
+    \section{Education}
+
+        \begin{educationentry}
+            \textbf{FPT University Ho Chi Minh} \hfill \textbf{Oct 2021 -- Jun 2025}
+            \\
+            \textit{Bachelor's Degree in Artificial Intelligence} \hfill \textit{Ho Chi Minh City, Vietnam}
+            \begin{highlightsforbulletentries}
+                \item \textbf{GPA:} 7.43/10 
+                \item \textbf{Relevant Coursework:} Machine Learning, Deep Learning, Natural Language Processing, Computer Vision
+            \end{highlightsforbulletentries}
+        \end{educationentry}
+
+    
+    \section{Experience}
+
+    \begin{experienceentry}
+    \textbf{AI Engineer}, Pythera AI \hfill \textbf{Aug 2024 -- Oct 2025}\\
+    \textit{Ho Chi Minh City, Vietnam}
+    \begin{highlightsforbulletentries}
+
+    \item \textbf{Agent System Development:}
+    \begin{highlightsforbulletentries}
+        \item Designed and implemented a \textbf{multi-agent chatbot system} using LangGraph and custom MCP tools to analyze trader behavior, track trading performance, and provide adaptive trading advice.
+        \item Built RAG-based workflows integrating structured data retrieval and reasoning, improving response consistency and contextual accuracy.
+        \item Developed workflow orchestration with Windmill to enable agent communication, parallel task execution, and cost-efficient self-hosting.
+    \end{highlightsforbulletentries}
+
+    \item \textbf{Dataset Engineering:}
+    \begin{highlightsforbulletentries}
+        \item Collected and processed the \textbf{Medical-O1-Reasoning} dataset for Vietnamese medical reasoning tasks.
+        \item Collect and preprocessed the \textbf{Stable Diffusion Inpainting 1.5} dataset for image editing tasks.
+    \end{highlightsforbulletentries}
+
+    \item \textbf{Model Training \& Optimization:}
+    \begin{highlightsforbulletentries}
+        \item Fine-tuned \hrefWithoutArrow{https://huggingface.co/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B}{DeepSeek-R1-0528-Qwen3-8B (8B)} with LoRA on a 16GB GPU, improving reasoning and Q\&A accuracy in Vietnamese medical contexts.
+        \item Trained and optimized \textbf{Stable Diffusion Inpainting 1.5} on low-end GPUs (<12GB VRAM) for object insertion, removal, and white balance correction in interior design datasets.
+        \item Achieved SSIM 0.833, FID 14.99 while maintaining training stability and minimal VRAM usage.
+    \end{highlightsforbulletentries}
+
+    \item \textbf{Deployment \& Inference Optimization:}
+    \begin{highlightsforbulletentries}
+        \item Quantized DeepSeek-R1 8B model to FP8 and deployed via \textbf{VLLM}, achieving \textbf{59 TPS} inference on RTX 5090.
+        \item Converted Stable Diffusion Inpainting 1.5 to \textbf{TensorRT} and deployed on \textbf{Triton Inference Server}, reducing image generation latency to \textbf{6s per image} with 10GB VRAM.
+    \end{highlightsforbulletentries}
+
+    \end{highlightsforbulletentries}
+    \end{experienceentry}
+
+
+
+    \begin{experienceentry}
+    \textbf{AI Engineer Intern}, QAI – FPT Software \hfill \textbf{Jan 2024 -- Apr 2024}\\
+    \textit{Quy Nhon, Vietnam}
+    \begin{highlightsforbulletentries}
+
+    \item \textbf{Dataset Collection \& Annotation:}
+    \begin{highlightsforbulletentries}
+        \item Collected and preprocessed \textbf{20k+ PPE images} from multiple industrial environments.
+        \item Performed bounding-box labeling and ensured annotation consistency for YOLO training.
+    \end{highlightsforbulletentries}
+
+    \item \textbf{Model Training \& Evaluation:}
+    \begin{highlightsforbulletentries}
+        \item Trained \textbf{YOLOv8 detection model} for PPE recognition, achieving \textbf{0.95 mAP@50}.
+    \end{highlightsforbulletentries}
+
+    \item \textbf{Deployment Optimization:}
+    \begin{highlightsforbulletentries}
+        \item Converted trained \textbf{YOLOv8 model} to \textbf{OpenVINO}, improving inference speed by \textbf{30\% on CPU}.
+    \end{highlightsforbulletentries}
+
+    \end{highlightsforbulletentries}
+    \end{experienceentry}
+
+
+\section{Projects}
+
+\begin{projectentry}
+\textbf{TrainForge} \hfill \textbf{\hrefWithoutArrow{https://github.com/ChaosAIVision/TrainForge}{github.com/ChaosAIVision/TrainForge}}\\
+\textit{Config-driven LLM/VLM training framework with Unsloth}
+\begin{highlightsforbulletentries}
+    \item YAML-based framework for \textbf{LoRA}, quantization (4/8-bit), and multi-GPU fine-tuning.  
+    \item Fine-tuned \textbf{Qwen3 4B} for \textbf{RAG reasoning} using the dataset \hrefWithoutArrow{https://huggingface.co/datasets/ChaosAiVision/VI_CoT-RAG-v2}{ChaosAiVision/VI\_CoT-RAG-v2}.  
+    \item Achieved \textbf{0.9894 context\_recall} and \textbf{0.825 faithfulness} (evaluated with \textbf{RAGAS}), running efficiently on a \textbf{minimum 8GB GPU}.
+    \end{highlightsforbulletentries}
+    \end{projectentry}
+
+    \begin{projectentry}
+    \textbf{Light-Diffusion} \hfill \textbf{\hrefWithoutArrow{https://github.com/ChaosAIVision/Light-Diffusion}{github.com/ChaosAIVision/Light-Diffusion}}\\
+    \textit{VRAM-efficient diffusion framework for object insertion}
+    \begin{highlightsforbulletentries}
+        \item PyTorch Lightning pipeline with Tiny VAE, 8-bit optimizer, and precomputed embeddings.  
+        \item Trains Stable Diffusion Inpainting 1.5 on a \textbf{minimum 8GB GPU} .
+    \end{highlightsforbulletentries}
+    \end{projectentry}
+
+    \begin{projectentry}
+    \textbf{YOLO-AI Framework} \hfill \textbf{\hrefWithoutArrow{https://github.com/ChaosAIVision/yolo-ai}{github.com/ChaosAIVision/yolo-ai}}\\
+    \textit{End-to-end real-time detection system with BentoML}
+    \begin{highlightsforbulletentries}
+        \item Full convert–deploy pipeline using YOLOv8, ONNX, and BentoML.  
+        \item React-based UI for image/video streaming; achieves \textbf{18–20 FPS}.
+    \end{highlightsforbulletentries}
+    \end{projectentry}
+
+
+
+    \section{Skills}
+
+    \begin{onecolentry}
+    \textbf{Model Training \& Optimization:} 
+    Experienced in training and fine-tuning models efficiently using \textbf{PyTorch Lightning}, \textbf{HuggingFace Transformers}, and \textbf{TRL}.  
+    Applied optimization techniques with \textbf{bitsandbytes}, \textbf{PEFT}, and \textbf{Unsloth} to reduce VRAM usage and accelerate training through quantization, LoRA, and gradient checkpointing.
+    \end{onecolentry}
+
+    \begin{onecolentry}
+    \textbf{Inference Optimization \& Self-Hosting:}
+    Designed and optimized inference pipelines using \textbf{VLLM}, \textbf{TensorRT}, and \textbf{Triton Inference Server} for large-model serving.  
+    Exported models to \textbf{ONNX} for multi-platform deployment and compiled them with \textbf{TensorRT/TensorRT-LLM} on CUDA GPUs and \textbf{OpenVINO} on CPUs for lightweight inference.  
+    Applied LLM quantization to reduce VRAM usage and increase throughput, enabling stable self-hosted model serving with low latency and optimized cost.
+    \end{onecolentry}
+
+    \begin{onecolentry}
+    \textbf{Agent System \& Workflow Development:}
+    Experienced in developing multi-agent systems using \textbf{LangGraph}, \textbf{LangChain}, and custom \textbf{MCP tools}.  
+    Built RAG-based pipelines and reasoning workflows with \textbf{Windmill} for efficient orchestration, context tracking, and reduced redundant computation in production environments.
+    \end{onecolentry}
+
+
+    \begin{onecolentry}
+    \textbf{Databases:} PostgreSQL, SQLite
+    \end{onecolentry}
+
+
+    \begin{onecolentry}
+    \textbf{Tools \& Environment:} Git, Docker, Cursor, Claude Code, Linux
+    \end{onecolentry}
+
+
+    \begin{onecolentry}
+    \textbf{Languages:} Vietnamese (Native), English (Good proficiency)
+    \end{onecolentry}
+
+
+\end{document}
